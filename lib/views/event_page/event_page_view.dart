@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,101 +5,88 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newevent/controller/data_controller.dart';
 import 'package:newevent/utils/color.dart';
-import 'package:newevent/views/invite_guest/invite_guest_screen.dart';
-
+//import 'package:newevent/views/invite_guest/invite_guest_screen.dart';//
 
 class EventPageView extends StatefulWidget {
+  DocumentSnapshot eventData, user;
 
-
-  DocumentSnapshot eventData,user;
-
-  EventPageView(this.eventData,this.user);
-
-
-
+  EventPageView(this.eventData, this.user);
 
   @override
   _EventPageViewState createState() => _EventPageViewState();
 }
 
 class _EventPageViewState extends State<EventPageView> {
+  DataController dataController = Get.find<DataController>();
 
-
-DataController dataController = Get.find<DataController>();
-  
-
-List eventSavedByUsers = [];
+  List eventSavedByUsers = [];
 
   @override
   Widget build(BuildContext context) {
-
-
-
     String image = '';
 
-    try{
+    try {
       image = widget.user.get('image');
-    }catch(e){
+    } catch (e) {
       image = '';
     }
 
     String eventImage = '';
-    try{
+    try {
       List media = widget.eventData.get('media') as List;
-      Map mediaItem = media.firstWhere((element) => element['isImage'] == true) as Map;
+      Map mediaItem =
+          media.firstWhere((element) => element['isImage'] == true) as Map;
       eventImage = mediaItem['url'];
-    }catch(e){
+    } catch (e) {
       eventImage = '';
     }
 
+    List joinedUsers = [];
 
-  List joinedUsers = [];
-
-    try{
+    try {
       joinedUsers = widget.eventData.get('joined');
-    }catch(e){
+    } catch (e) {
       joinedUsers = [];
     }
 
-List tags = [];
-try{
-  tags = widget.eventData.get('tags');
-}catch(e){
-  tags = [];
-}
+    List tags = [];
+    try {
+      tags = widget.eventData.get('tags');
+    } catch (e) {
+      tags = [];
+    }
 
-String tagsCollectively = '';
+    String tagsCollectively = '';
 
-tags.forEach((e){
-  tagsCollectively += '#$e ';
-});
+    tags.forEach((e) {
+      tagsCollectively += '#$e ';
+    });
 
-int likes = 0;
-  int comments = 0;
+    int likes = 0;
+    int comments = 0;
 
-  try{
-    likes = widget.eventData.get('likes').length;
-  }catch(e){
-    likes = 0;
-  }
+    try {
+      likes = widget.eventData.get('likes').length;
+    } catch (e) {
+      likes = 0;
+    }
 
-  try{
-    comments = widget.eventData.get('comments').length;
-  }catch(e){
-    comments = 0;
-  }
+    try {
+      comments = widget.eventData.get('comments').length;
+    } catch (e) {
+      comments = 0;
+    }
 
+    try {
+      eventSavedByUsers = widget.eventData.get('saves');
+    } catch (e) {
+      eventSavedByUsers = [];
+    }
 
-                    try{
-                      eventSavedByUsers = widget.eventData.get('saves');
-                    }catch(e){
-                      eventSavedByUsers = [];
-                    }
+    // DateTime d = DateTime.tryParse(widget.eventData.get('date'))!;
 
-  // DateTime d = DateTime.tryParse(widget.eventData.get('date'))!;
-
-  // String formattedDate = formatDate(widget.eventData.get('date'));
-  //DateFormat("dd-MMM").format(d);
+    // String formattedDate = formatDate(widget.eventData.get('date'));
+    //DateFormat("dd-MMM").format(d);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -163,7 +149,7 @@ int likes = 0;
                     child: Row(
                       children: [
                         Text(
-                         '${widget.eventData.get('event')}',
+                          '${widget.eventData.get('event')}',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
@@ -187,7 +173,7 @@ int likes = 0;
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: Text(
-                     '${widget.eventData.get('start_time')}',
+                      '${widget.eventData.get('start_time')}',
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
@@ -258,37 +244,34 @@ int likes = 0;
               Container(
                 child: Row(
                   children: [
-                    
-
                     Container(
-                      width: Get.width*0.6,
+                      width: Get.width * 0.6,
                       height: 50,
-                      child: ListView.builder(itemBuilder: (ctx,index){
+                      child: ListView.builder(
+                        itemBuilder: (ctx, index) {
+                          DocumentSnapshot user = dataController.allUsers
+                              .firstWhere((e) => e.id == joinedUsers[index]);
 
+                          String image = '';
 
-                    DocumentSnapshot user = dataController.allUsers.firstWhere((e)=> e.id == joinedUsers[index]);
+                          try {
+                            image = user.get('image');
+                          } catch (e) {
+                            image = '';
+                          }
 
-                    String image = '';
-
-                    try{
-                      image = user.get('image');
-                    }catch(e){
-                      image = '';
-                    }
-
-
-
-                return Container(
-                  margin: EdgeInsets.only(left: 10),
-                  child: CircleAvatar(
-                minRadius: 13,
-                backgroundImage: NetworkImage(image),
-              ),
-                );
-              },itemCount: joinedUsers.length,scrollDirection: Axis.horizontal,),
+                          return Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: CircleAvatar(
+                              minRadius: 13,
+                              backgroundImage: NetworkImage(image),
+                            ),
+                          );
+                        },
+                        itemCount: joinedUsers.length,
+                        scrollDirection: Axis.horizontal,
+                      ),
                     ),
-
-
                     Spacer(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -319,7 +302,6 @@ int likes = 0;
               ),
               RichText(
                   text: TextSpan(children: [
-             
                 TextSpan(
                   text: widget.eventData.get('description'),
                   style: TextStyle(
@@ -328,7 +310,6 @@ int likes = 0;
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-              
               ])),
               SizedBox(
                 height: 10,
@@ -338,7 +319,7 @@ int likes = 0;
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        Get.to(() => Inviteguest());
+                        //      Get.to(() => Inviteguest());
                       },
                       child: Container(
                         height: 50,
@@ -364,7 +345,7 @@ int likes = 0;
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                    //    Get.off(() => CheckOutView(widget.eventData));
+                        //    Get.off(() => CheckOutView(widget.eventData));
                       },
                       child: Container(
                         height: 50,
@@ -403,7 +384,7 @@ int likes = 0;
                 children: [
                   Expanded(
                     child: Text(
-                     tagsCollectively,
+                      tagsCollectively,
                       maxLines: 2,
                       style: TextStyle(
                         fontSize: 13,
@@ -436,11 +417,6 @@ int likes = 0;
                   SizedBox(
                     width: 10,
                   ),
-                  Image.asset(
-                    'assets/message.png',
-                    width: 16,
-                    height: 16,
-                  ),
                   SizedBox(
                     width: 10,
                   ),
@@ -461,45 +437,48 @@ int likes = 0;
                   ),
                   Spacer(),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
+                      if (eventSavedByUsers
+                          .contains(FirebaseAuth.instance.currentUser!.uid)) {
+                        FirebaseFirestore.instance
+                            .collection('events')
+                            .doc(widget.eventData.id)
+                            .set({
+                          'saves': FieldValue.arrayRemove(
+                              [FirebaseAuth.instance.currentUser!.uid])
+                        }, SetOptions(merge: true));
 
-                    if(eventSavedByUsers.contains(FirebaseAuth.instance.currentUser!.uid)){
-
-                      FirebaseFirestore.instance.collection('events').doc(widget.eventData.id).set({
-                        'saves': FieldValue.arrayRemove([FirebaseAuth.instance.currentUser!.uid])
-                      },SetOptions(merge: true));
-
-
-
-                      eventSavedByUsers.remove(FirebaseAuth.instance.currentUser!.uid);
-                      setState(() {
-                        
-                      });
-
-                    }else{
-                      FirebaseFirestore.instance.collection('events').doc(widget.eventData.id).set({
-                        'saves': FieldValue.arrayUnion([FirebaseAuth.instance.currentUser!.uid])
-                      },SetOptions(merge: true));
-                       eventSavedByUsers.add(FirebaseAuth.instance.currentUser!.uid);
-                      setState(() {
-                        
-                      });
-                    }
+                        eventSavedByUsers
+                            .remove(FirebaseAuth.instance.currentUser!.uid);
+                        setState(() {});
+                      } else {
+                        FirebaseFirestore.instance
+                            .collection('events')
+                            .doc(widget.eventData.id)
+                            .set({
+                          'saves': FieldValue.arrayUnion(
+                              [FirebaseAuth.instance.currentUser!.uid])
+                        }, SetOptions(merge: true));
+                        eventSavedByUsers
+                            .add(FirebaseAuth.instance.currentUser!.uid);
+                        setState(() {});
+                      }
                     },
                     child: Image.asset(
-                    'assets/boomMark.png',
-                    height: 16,
-                    width: 16,
-                     color: eventSavedByUsers.contains(FirebaseAuth.instance.currentUser!.uid)? Colors.red : Colors.black,
-                 
-                  ),
+                      'assets/boomMark.png',
+                      height: 16,
+                      width: 16,
+                      color: eventSavedByUsers
+                              .contains(FirebaseAuth.instance.currentUser!.uid)
+                          ? Colors.red
+                          : Colors.black,
+                    ),
                   ),
                 ],
               ),
               SizedBox(
                 height: 25,
               ),
-           
             ],
           ),
         ),

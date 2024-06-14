@@ -7,10 +7,9 @@ import 'package:newevent/controller/data_controller.dart';
 import 'package:newevent/views/bottom_nav_bar/bottom_bar_view.dart';
 import 'package:newevent/views/onboarding_screen.dart';
 
-void main() async
-{
-WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 // Get.put(DataController());
   runApp(const MyApp());
 }
@@ -26,8 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // This is the theme of your application.
         //
-    
-        
+
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -77,19 +75,19 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return GetMaterialApp(
-      theme: ThemeData(
-        textTheme: GoogleFonts.latoTextTheme(
-
-          Theme.of(context).textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+        theme: ThemeData(
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context)
+                .textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+          ),
         ),
-      ),
-      title: 'Flutter Demo',
-
-      home: 
-      //FirebaseAuth.instance.currentUser == null? 
- FirebaseAuth.instance.currentUser?.uid==null? OnBoardingScreen() :BottomBarView()
-      //: BottomBarView(),
-    );
-      
+        title: 'Flutter Demo',
+        home:
+            //FirebaseAuth.instance.currentUser == null?
+            FirebaseAuth.instance.currentUser?.uid == null
+                ? OnBoardingScreen()
+                : BottomBarView()
+        //: BottomBarView(),
+        );
   }
 }

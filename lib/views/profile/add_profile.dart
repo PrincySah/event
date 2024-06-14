@@ -7,8 +7,6 @@ import 'package:newevent/controller/auth_controller.dart';
 import 'package:newevent/utils/color.dart';
 import 'package:newevent/views/widgets/my_widgets.dart';
 
-
-
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -48,13 +46,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () async {
                   final ImagePicker _picker = ImagePicker();
                   final XFile? image =
-                  await _picker.pickImage(source: ImageSource.camera);
+                      await _picker.pickImage(source: ImageSource.camera);
                   if (image != null) {
                     profileImage = File(image.path);
                     setState(() {});
-                 //   Navigator.pop(context);
+                    // Navigator.pop(context);
                   }
-
                 },
                 child: Icon(
                   Icons.camera_alt,
@@ -75,7 +72,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     setState(() {});
                     Navigator.pop(context);
                   }
-
                 },
                 child: Image.asset(
                   'assets/gallary.png',
@@ -107,12 +103,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // TODO: implement initState
     super.initState();
     authController = Get.find<AuthController>();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
@@ -155,21 +149,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           child: profileImage == null
                               ? CircleAvatar(
-                            radius: 56,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: Colors.blue,
-                              size: 50,
-                            ),
-                          )
+                                  radius: 56,
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.blue,
+                                    size: 50,
+                                  ),
+                                )
                               : CircleAvatar(
-                            radius: 56,
-                            backgroundColor: Colors.white,
-                            backgroundImage: FileImage(
-                              profileImage!,
-                            ),
-                          ),
+                                  radius: 56,
+                                  backgroundColor: Colors.white,
+                                  backgroundImage: FileImage(
+                                    profileImage!,
+                                  ),
+                                ),
                         ),
                       ],
                     ),
@@ -219,51 +213,105 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return '';
                       }
                     }),
-                Container(
-                  height: 48,
-                  child: TextField(
-                    controller: dob,
-                    // enabled: false,
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(new FocusNode());
-
-                      _selectDate(context);
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(top: 10, left: 10),
-                      suffixIcon: Image.asset(
-                        'assets/calender.png',
-                        cacheHeight: 20,
-                      ),
-                      hintText: 'Date Of Birht',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+                // TextField(
+                //   controller: dob,
+                //   keyboardType: TextInputType
+                //       .datetime, // Set keyboard type for date input
+                //   decoration: InputDecoration(
+                //     contentPadding: EdgeInsets.only(top: 10, left: 10),
+                //     suffixIcon: Image.asset(
+                //       'assets/calender.png',
+                //       cacheHeight: 20,
+                //     ),
+                //     hintText: 'Date Of Birth',
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(8.0),
+                //     ),
+                //   ),
+                //   onTap: () {
+                //     FocusScope.of(context).requestFocus(new FocusNode());
+                //     _selectDate(context);
+                //   },
+                //   validator : (int value) {
+                //     if (value == null) {
+                //       return 'Please enter your date of birth.';
+                //     } else {
+                //       try {
+                //         final selectedDate = DateTime.parse("2024-06-14");
+                //         final now = DateTime.now();
+                //         if (selectedDate.isAfter(now)) {
+                //           return 'Date of birth cannot be in the future.';
+                //         }
+                //       } on FormatException catch (e) {
+                //         return 'Invalid date format. Please use YYYY-MM-DD.';
+                //       }
+                //     }
+                //     return null; // Valid date entered
+                //   },
+                // ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 10, left: 10),
+                    suffixIcon: Image.asset(
+                      'assets/calender.png',
+                      cacheHeight: 20,
+                    ),
+                    hintText: 'Date Of Birth',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
+                  controller: dob,
+                  keyboardType: TextInputType.datetime,
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                    _selectDate(context);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your date of birth.';
+                    } else {
+                      try {
+                        final selectedDate = DateTime.parse(value);
+                        final now = DateTime.now();
+                        if (selectedDate.isAfter(now)) {
+                          return 'Date of birth cannot be in the future.';
+                        }
+                        // Add optional minimum age validation here:
+                        final eighteenYearsAgo =
+                            now.subtract(Duration(days: 365 * 18));
+                        if (selectedDate.isAfter(eighteenYearsAgo)) {
+                          return 'You must be 18 years or older.';
+                        }
+                      } on FormatException catch (e) {
+                        return 'Invalid date format. Please use YYYY-MM-DD.';
+                      }
+                    }
+                    return null; // Valid date entered
+                  },
                 ),
                 Row(
                   children: [
                     Expanded(
                         child: Container(
-                          // alignment: Alignment.topLeft,
-                          // width: 150,
-                          child: RadioListTile(
-                            title: Text(
-                              'Male',
-                              style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.genderTextColor,
-                              ),
-                            ),
-                            value: 0,
-                            groupValue: selectedRadio,
-                            onChanged: (int? val) {
-                              setSelectedRadio(val!);
-                            },
+                      // alignment: Alignment.topLeft,
+                      // width: 150,
+                      child: RadioListTile(
+                        title: Text(
+                          'Male',
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.genderTextColor,
                           ),
-                        )),
+                        ),
+                        value: 0,
+                        groupValue: selectedRadio,
+                        onChanged: (int? val) {
+                          setSelectedRadio(val!);
+                        },
+                      ),
+                    )),
                     Expanded(
                       child: Container(
                         child: RadioListTile(
@@ -285,43 +333,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-                Obx(()=> authController!.isProfileInformationLoading.value? Center(child: CircularProgressIndicator(),) :Container(
-                  height: 50,
-                  margin: EdgeInsets.only(top: Get.height * 0.02),
-                  width: Get.width,
-                  child: elevatedButton(
-                    text: 'Save',
-                    onpress: () async{
-                      if (dob.text.isEmpty) {
-                        Get.snackbar(
-                            'Warning', "Date of birth is required.",
-                            colorText: Colors.white,
-                            backgroundColor: Colors.blue);
-                        return '';
-                      }
+                Obx(() => authController!.isProfileInformationLoading.value
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        height: 50,
+                        margin: EdgeInsets.only(top: Get.height * 0.02),
+                        width: Get.width,
+                        child: elevatedButton(
+                          text: 'Save',
+                          onpress: () async {
+                            if (dob.text.isEmpty) {
+                              Get.snackbar(
+                                  'Warning', "Date of birth is required.",
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.blue);
+                              return '';
+                            }
 
-                      if (!formKey.currentState!.validate()) {
-                        return null;
-                      }
+                            if (!formKey.currentState!.validate()) {
+                              return null;
+                            }
 
-                      if(profileImage == null){
-                        Get.snackbar(
-                            'Warning', "Image is required.",
-                            colorText: Colors.white,
-                            backgroundColor: Colors.blue);
-                        return null;
-                      }
+                            if (profileImage == null) {
+                              Get.snackbar('Warning', "Image is required.",
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.blue);
+                              return null;
+                            }
 
+                            authController!.isProfileInformationLoading(true);
 
-                      authController!.isProfileInformationLoading(true);
+                            String imageUrl = await authController!
+                                .uploadImageToFirebaseStorage(profileImage!);
 
-                      String imageUrl = await authController!.uploadImageToFirebaseStorage(profileImage!);
-
-                      authController!.uploadProfileData(imageUrl, firstNameController.text.trim(), lastNameController.text.trim(), mobileNumberController.text.trim(), dob.text.trim(), selectedRadio ==0 ? "Male": "Female");
-
-                    },
-                  ),
-                )),
+                            authController!.uploadProfileData(
+                                imageUrl,
+                                firstNameController.text.trim(),
+                                lastNameController.text.trim(),
+                                mobileNumberController.text.trim(),
+                                dob.text.trim(),
+                                selectedRadio == 0 ? "Male" : "Female");
+                          },
+                        ),
+                      )),
                 SizedBox(
                   height: Get.height * 0.03,
                 ),
