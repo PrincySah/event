@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   if (image != null) {
                     profileImage = File(image.path);
                     setState(() {});
-                    // Navigator.pop(context);
+                    //   Navigator.pop(context);
                   }
                 },
                 child: Icon(
@@ -213,82 +213,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return '';
                       }
                     }),
-                // TextField(
-                //   controller: dob,
-                //   keyboardType: TextInputType
-                //       .datetime, // Set keyboard type for date input
-                //   decoration: InputDecoration(
-                //     contentPadding: EdgeInsets.only(top: 10, left: 10),
-                //     suffixIcon: Image.asset(
-                //       'assets/calender.png',
-                //       cacheHeight: 20,
-                //     ),
-                //     hintText: 'Date Of Birth',
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //     ),
-                //   ),
-                //   onTap: () {
-                //     FocusScope.of(context).requestFocus(new FocusNode());
-                //     _selectDate(context);
-                //   },
-                //   validator : (int value) {
-                //     if (value == null) {
-                //       return 'Please enter your date of birth.';
-                //     } else {
-                //       try {
-                //         final selectedDate = DateTime.parse("2024-06-14");
-                //         final now = DateTime.now();
-                //         if (selectedDate.isAfter(now)) {
-                //           return 'Date of birth cannot be in the future.';
-                //         }
-                //       } on FormatException catch (e) {
-                //         return 'Invalid date format. Please use YYYY-MM-DD.';
-                //       }
-                //     }
-                //     return null; // Valid date entered
-                //   },
-                // ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(top: 10, left: 10),
-                    suffixIcon: Image.asset(
-                      'assets/calender.png',
-                      cacheHeight: 20,
-                    ),
-                    hintText: 'Date Of Birth',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                Container(
+                  height: 48,
+                  child: TextField(
+                    controller: dob,
+                    // enabled: false,
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(new FocusNode());
+
+                      _selectDate(context);
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 10, left: 10),
+                      suffixIcon: Image.asset(
+                        'assets/calender.png',
+                        cacheHeight: 20,
+                      ),
+                      hintText: 'Date Of Birth',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
                     ),
                   ),
-                  controller: dob,
-                  keyboardType: TextInputType.datetime,
-                  onTap: () {
-                    FocusScope.of(context).requestFocus(new FocusNode());
-                    _selectDate(context);
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your date of birth.';
-                    } else {
-                      try {
-                        final selectedDate = DateTime.parse(value);
-                        final now = DateTime.now();
-                        if (selectedDate.isAfter(now)) {
-                          return 'Date of birth cannot be in the future.';
-                        }
-                        // Add optional minimum age validation here:
-                        final eighteenYearsAgo =
-                            now.subtract(Duration(days: 365 * 18));
-                        if (selectedDate.isAfter(eighteenYearsAgo)) {
-                          return 'You must be 18 years or older.';
-                        }
-                      } on FormatException catch (e) {
-                        return 'Invalid date format. Please use YYYY-MM-DD.';
-                      }
-                    }
-                    return null; // Valid date entered
-                  },
                 ),
                 Row(
                   children: [

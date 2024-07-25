@@ -14,11 +14,10 @@ import 'package:newevent/views/widgets/my_widgets.dart';
 
 import '../../controller/data_controller.dart';
 
-
 class Chat extends StatefulWidget {
-  Chat({this.image, this.name, this.groupId, this.fcmToken,this.uid});
+  Chat({this.image, this.name, this.groupId, this.fcmToken, this.uid});
 
-  String? image, name, groupId, fcmToken,uid;
+  String? image, name, groupId, fcmToken, uid;
 
   @override
   _ChatState createState() => _ChatState();
@@ -95,14 +94,14 @@ class _ChatState extends State<Chat> {
                 myText(
                   text: widget.name,
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color:Colors.black
-                    // Colors.black,
-                  ),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black
+                      // Colors.black,
+                      ),
                 ),
                 myText(
-                  text: 'sara_smith',
+                  text: '',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
@@ -131,7 +130,7 @@ class _ChatState extends State<Chat> {
       body: Column(
         children: [
           Expanded(
-              child: Obx(()=> dataController!.isMessageSending.value
+              child: Obx(() => dataController!.isMessageSending.value
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
@@ -161,22 +160,25 @@ class _ChatState extends State<Chat> {
                                   break;
 
                                 case 'iSentImage':
-                                messageWidget = imageSent(data[index]);  
-                                break;
+                                  messageWidget = imageSent(data[index]);
+                                  break;
                                 case 'iSentReply':
-                                messageWidget = sentReplyTextToText(data[index]);  
+                                  messageWidget =
+                                      sentReplyTextToText(data[index]);
                               }
                             } else {
- switch (messageType) {
+                              switch (messageType) {
                                 case 'iSentText':
-                                  messageWidget = textMessageIReceived(data[index]);
+                                  messageWidget =
+                                      textMessageIReceived(data[index]);
                                   break;
 
                                 case 'iSentImage':
-                                messageWidget = imageReceived(data[index]);  
-                                break;
+                                  messageWidget = imageReceived(data[index]);
+                                  break;
                                 case 'iSentReply':
-                                messageWidget = receivedReplyTextToText(data[index]); 
+                                  messageWidget =
+                                      receivedReplyTextToText(data[index]);
                               }
                             }
 
@@ -190,12 +192,7 @@ class _ChatState extends State<Chat> {
                           .doc(widget.groupId)
                           .collection('chatroom')
                           .snapshots(),
-                    ))
-                    
-                    
-                    ),
-          
-          
+                    ))),
           Container(
             height: isEmojiPickerOpen ? 300 : 75,
             // padding: MediaQuery.of(context).viewInsets,
@@ -219,8 +216,7 @@ class _ChatState extends State<Chat> {
                     right: 20,
                   ),
                   decoration: BoxDecoration(
-                    color:               
-Colors.white.withOpacity(0.6),
+                    color: Colors.white.withOpacity(0.6),
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Row(
@@ -281,7 +277,6 @@ Colors.white.withOpacity(0.6),
                               }
                               String message = messageController.text;
                               messageController.clear();
-                              
 
                               Map<String, dynamic> data = {
                                 'type': 'iSentText',
@@ -290,7 +285,7 @@ Colors.white.withOpacity(0.6),
                                 'uid': myUid
                               };
 
-                              if(replyText.length>0){
+                              if (replyText.length > 0) {
                                 data['reply'] = replyText;
                                 data['type'] = 'iSentReply';
                                 replyText = '';
@@ -301,10 +296,9 @@ Colors.white.withOpacity(0.6),
                                   grouid: widget.groupId,
                                   lastMessage: message);
 
-dataController!.createNotification(widget.uid!);
+                              dataController!.createNotification(widget.uid!);
 
-                      //        LocalNotificationService.sendNotification(title: 'New message',message: message,token: widget.fcmToken);
-
+                              //        LocalNotificationService.sendNotification(title: 'New message',message: message,token: widget.fcmToken);
                             },
                             child: Container(
                               width: 41,
@@ -324,35 +318,34 @@ dataController!.createNotification(widget.uid!);
                   child: SizedBox(
                     height: 230,
                     child: EmojiPicker(
-                        // onEmojiSelected: (Category category, Emoji emoji) {
-                        //   _onEmojiSelected(emoji);
-                        // },
-                        onBackspacePressed: _onBackspacePressed,
-                        // config: Config(
-                        //     columns: 7,
-                        //     // Issue: https://github.com/flutter/flutter/issues/28894
-                        //     emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
-                        //     verticalSpacing: 0,
-                        //     horizontalSpacing: 0,
-                        //     initCategory: Category.RECENT,
-                        //     bgColor: const Color(0xFFF2F2F2),
-                        //     indicatorColor: Colors.blue,
-                        //     iconColor: Colors.grey,
-                        //     iconColorSelected: Colors.blue,
-                        //     progressIndicatorColor: Colors.blue,
-                        //     backspaceColor: Colors.blue,
-                        //     showRecentsTab: true,
-                        //     recentsLimit: 28,
-                        //     noRecentsText: 'No Recents',
-                        //     noRecentsStyle: const TextStyle(
-                        //         fontSize: 20, color: Colors.black26),
-                        //     tabIndicatorAnimDuration: kTabScrollDuration,
-                        //     categoryIcons: const CategoryIcons(),
-                        //     buttonMode: ButtonMode.MATERIAL
-                            
-                            
-                        //     )
-                            ),
+                      // onEmojiSelected: (Category category, Emoji emoji) {
+                      //   _onEmojiSelected(emoji);
+                      // },
+                      onBackspacePressed: _onBackspacePressed,
+                      // config: Config(
+                      //     columns: 7,
+                      //     // Issue: https://github.com/flutter/flutter/issues/28894
+                      //     emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                      //     verticalSpacing: 0,
+                      //     horizontalSpacing: 0,
+                      //     initCategory: Category.RECENT,
+                      //     bgColor: const Color(0xFFF2F2F2),
+                      //     indicatorColor: Colors.blue,
+                      //     iconColor: Colors.grey,
+                      //     iconColorSelected: Colors.blue,
+                      //     progressIndicatorColor: Colors.blue,
+                      //     backspaceColor: Colors.blue,
+                      //     showRecentsTab: true,
+                      //     recentsLimit: 28,
+                      //     noRecentsText: 'No Recents',
+                      //     noRecentsStyle: const TextStyle(
+                      //         fontSize: 20, color: Colors.black26),
+                      //     tabIndicatorAnimDuration: kTabScrollDuration,
+                      //     categoryIcons: const CategoryIcons(),
+                      //     buttonMode: ButtonMode.MATERIAL
+
+                      //     )
+                    ),
                   ),
                 ),
               ],
@@ -365,19 +358,19 @@ dataController!.createNotification(widget.uid!);
 
   textMessageIReceived(DocumentSnapshot doc) {
     String message = '';
-    try{
+    try {
       message = doc.get('message');
-    }catch(e){
+    } catch (e) {
       message = '';
     }
     return Container(
       margin: EdgeInsets.only(top: 10),
       child: Dismissible(
         confirmDismiss: (a) async {
-        replyText = message;
-        await Future.delayed(Duration(seconds: 1));
-        openKeyboard();
-        return false;
+          replyText = message;
+          await Future.delayed(Duration(seconds: 1));
+          openKeyboard();
+          return false;
         },
         key: UniqueKey(),
         child: Column(
@@ -482,7 +475,7 @@ dataController!.createNotification(widget.uid!);
             Padding(
               padding: const EdgeInsets.only(top: 5, right: 20),
               child: Text(
-                "Yesterday",
+                "just now",
                 style: TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.w500,
@@ -497,16 +490,13 @@ dataController!.createNotification(widget.uid!);
   }
 
   imageSent(DocumentSnapshot doc) {
-
-
     String message = '';
 
-    try{
-      message  = doc.get('message');
-    }catch(e){
+    try {
+      message = doc.get('message');
+    } catch (e) {
       message = '';
     }
-
 
     return Container(
       margin: EdgeInsets.only(right: 20, top: 10),
@@ -526,8 +516,7 @@ dataController!.createNotification(widget.uid!);
                         topLeft: Radius.circular(18),
                         bottomLeft: Radius.circular(18)),
                     image: DecorationImage(
-                        image: NetworkImage(message),
-                        fit: BoxFit.fill)),
+                        image: NetworkImage(message), fit: BoxFit.fill)),
               ),
             ],
           ),
@@ -559,9 +548,9 @@ dataController!.createNotification(widget.uid!);
 
   imageReceived(DocumentSnapshot doc) {
     String message = '';
-    try{
+    try {
       message = doc.get('message');
-    }catch(e){
+    } catch (e) {
       message = '';
     }
     return Container(
@@ -597,8 +586,7 @@ dataController!.createNotification(widget.uid!);
                         topLeft: Radius.circular(18),
                         bottomRight: Radius.circular(18)),
                     image: DecorationImage(
-                        image: NetworkImage(message),
-                        fit: BoxFit.fill)),
+                        image: NetworkImage(message), fit: BoxFit.fill)),
               ),
             ],
           ),
@@ -629,21 +617,19 @@ dataController!.createNotification(widget.uid!);
   }
 
   sentReplyTextToText(DocumentSnapshot doc) {
-
     String message = '';
     String reply = '';
-    try{
+    try {
       message = doc.get('message');
-    }catch(e){
+    } catch (e) {
       message = '';
     }
 
-    try{
+    try {
       reply = doc.get('reply');
-    }catch(e){
+    } catch (e) {
       reply = '';
     }
-
 
     return Container(
       margin: EdgeInsets.only(right: 20, top: 5, bottom: 10),
@@ -761,17 +747,17 @@ dataController!.createNotification(widget.uid!);
   }
 
   receivedReplyTextToText(DocumentSnapshot doc) {
-     String message = '';
+    String message = '';
     String reply = '';
-    try{
+    try {
       message = doc.get('message');
-    }catch(e){
+    } catch (e) {
       message = '';
     }
 
-    try{
+    try {
       reply = doc.get('reply');
-    }catch(e){
+    } catch (e) {
       reply = '';
     }
 
@@ -914,21 +900,22 @@ dataController!.createNotification(widget.uid!);
                   if (image != null) {
                     Navigator.pop(context);
 
+                    dataController!.isMessageSending(true);
 
-                dataController!.isMessageSending(true);
+                    String imageUrl = await dataController!
+                        .uploadImageToFirebase(File(image.path));
 
-                 String imageUrl = await  dataController!.uploadImageToFirebase(File(image.path));
+                    Map<String, dynamic> data = {
+                      'type': 'iSentImage',
+                      'message': imageUrl,
+                      'timeStamp': DateTime.now(),
+                      'uid': myUid
+                    };
 
-                  Map<String,dynamic> data = {
-                    'type': 'iSentImage',
-                    'message': imageUrl,
-                    'timeStamp': DateTime.now(),
-                    'uid': myUid
-                  };
-
-
-                  dataController!.sendMessageToFirebase(data: data,grouid: widget.groupId,lastMessage: 'Image');
-
+                    dataController!.sendMessageToFirebase(
+                        data: data,
+                        grouid: widget.groupId,
+                        lastMessage: 'Image');
                   }
                 },
                 child: Icon(
@@ -941,25 +928,27 @@ dataController!.createNotification(widget.uid!);
               ),
               InkWell(
                 onTap: () async {
-                    final ImagePicker _picker = ImagePicker();
+                  final ImagePicker _picker = ImagePicker();
                   final XFile? image =
                       await _picker.pickImage(source: ImageSource.gallery);
                   if (image != null) {
-                     Navigator.pop(context);
-                     dataController!.isMessageSending(true);
+                    Navigator.pop(context);
+                    dataController!.isMessageSending(true);
 
-                 String imageUrl = await  dataController!.uploadImageToFirebase(File(image.path));
+                    String imageUrl = await dataController!
+                        .uploadImageToFirebase(File(image.path));
 
-                  Map<String,dynamic> data = {
-                    'type': 'iSentImage',
-                    'message': imageUrl,
-                    'timeStamp': DateTime.now(),
-                    'uid': myUid
-                  };
+                    Map<String, dynamic> data = {
+                      'type': 'iSentImage',
+                      'message': imageUrl,
+                      'timeStamp': DateTime.now(),
+                      'uid': myUid
+                    };
 
-
-                  dataController!.sendMessageToFirebase(data: data,grouid: widget.groupId,lastMessage: 'Image');
-
+                    dataController!.sendMessageToFirebase(
+                        data: data,
+                        grouid: widget.groupId,
+                        lastMessage: 'Image');
                   }
                 },
                 child: Image.asset(
