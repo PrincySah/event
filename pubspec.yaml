@@ -49,11 +49,13 @@ dependencies:
   firebase_storage: ^11.7.7
 
   firebase_messaging: ^14.9.4
-  # flutter_local_notifications: ^17.1.1
-  # timeago: ^3.6.0
+  flutter_local_notifications: ^17.1.1
+  timeago: ^3.6.0
   emoji_picker_flutter: ^2.1.0
-  # flutter_stripe: ^10.1.0
-
+  flutter_stripe: ^11.0.0
+  esewa_flutter: ^1.1.2
+  khalti_flutter: ^3.0.0
+  webview_flutter: ^4.4.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

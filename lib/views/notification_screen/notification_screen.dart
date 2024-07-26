@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:newevent/utils/color.dart';
+import 'package:newevent/views/widgets/my_widgets.dart';
 
-import '../../utils/app_color.dart';
-import '../../widgets/my_widgets.dart';
+
+
 import 'package:timeago/timeago.dart' as timeAgo;
 
 class UserNotificationScreen extends StatefulWidget {

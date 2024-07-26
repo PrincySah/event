@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newevent/controller/data_controller.dart';
 import 'package:newevent/utils/color.dart';
+import 'package:newevent/views/check_out/check_out_screen.dart';
 //import 'package:newevent/views/invite_guest/invite_guest_screen.dart';//
 
 class EventPageView extends StatefulWidget {
@@ -345,7 +346,7 @@ class _EventPageViewState extends State<EventPageView> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        //    Get.off(() => CheckOutView(widget.eventData));
+                           Get.off(() => CheckOutView(widget.eventData));
                       },
                       child: Container(
                         height: 50,

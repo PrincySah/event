@@ -1,12 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ems/services/payment_service/payment_service.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:newevent/Services/payment_service/payment_service.dart';
+import 'package:newevent/utils/color.dart';
+import 'package:newevent/views/widgets/my_widgets.dart';
 
-import '../../utils/app_color.dart';
-import '../../widgets/my_widgets.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class CheckOutView extends StatefulWidget {
   DocumentSnapshot? eventDoc;
@@ -18,8 +25,31 @@ class CheckOutView extends StatefulWidget {
 }
 
 class _CheckOutViewState extends State<CheckOutView> {
-  int selectedRadio = 0;
 
+
+  int selectedRadio = 0;
+String refId = '';
+  String hasError = '';
+  final String title='';
+//  initState() {
+//    super.initState();
+//     print("initState Called");
+//   }
+// final config = PaymentConfig(
+//   amount: 10000, // Amount should be in paisa
+//   productIdentity: 'dell-g5-g5510-2021',
+//   productName: 'Dell G5 G5510 2021',
+//   productUrl: 'https://www.khalti.com/#/bazaar',
+//   additionalData: { // Not mandatory; can be used for reporting purpose
+//     'vendor': 'Khalti Bazaar',
+//   },
+//   mobile: '9800000001', // Not mandatory; can be used to fill mobile number field
+//   mobileReadOnly: true, // Not mandatory; makes the mobile field not editable
+// );
+
+//  late final WebViewController controller;
+//final WebViewController controller =
+        //WebViewController.fromPlatformCreationParams();
   void setSelectedRadio(int val) {
     setState(() {
       selectedRadio = val;
@@ -218,162 +248,8 @@ class _CheckOutViewState extends State<CheckOutView> {
                   fontSize: 16,
                 ),
               ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 16,
-                        height: 12,
-                        child: Image.asset(
-                          'assets/Group1.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      myText(
-                        text: 'Add Card detail',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Radio(
-                    value: 0,
-                    groupValue: selectedRadio,
-                    onChanged: (int? val) {
-                      setSelectedRadio(val!);
-                    },
-                  ),
-                ],
-              ),
-              textField(text: 'Card Number'),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 48,
-                      margin: EdgeInsets.only(
-                        bottom: Get.height * 0.02,
-                      ),
-                      child: TextFormField(
-                        onTap: () {
-                          _selectDate(context);
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Expiration date',
-                          contentPadding: EdgeInsets.only(top: 10, left: 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: Get.width * 0.04,
-                  ),
-                  Expanded(child: textField(text: 'Security Code'))
-                ],
-              ),
-              SizedBox(
-                height: Get.height * 0.01,
-              ),
-              Row(
-                children: [
-                  myText(
-                    text: 'Other option',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Spacer(),
-                  Radio(
-                    value: 1,
-                    groupValue: selectedRadio,
-                    onChanged: (int? value) {
-                      setState(() {
-                        setSelectedRadio(value!);
-                      });
-                    },
-                    activeColor: AppColors.blue,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    width: 48,
-                    height: 34,
-                    child: Image.asset(
-                      'assets/paypal.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  myText(
-                    text: 'Paypal',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Spacer(),
-                  Radio(
-                    value: 2,
-                    groupValue: selectedRadio,
-                    onChanged: (int? value) {
-                      setState(() {
-                        setSelectedRadio(value!);
-                      });
-                    },
-                    activeColor: AppColors.blue,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    width: 48,
-                    height: 34,
-                    child: Image.asset(
-                      'assets/strip.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  myText(
-                    text: 'Strip',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Spacer(),
-                  Radio(
-                    value: 3,
-                    groupValue: selectedRadio,
-                    onChanged: (int? value) {
-                      setState(() {
-                        setSelectedRadio(value!);
-                      });
-                    },
-                    activeColor: AppColors.blue,
-                  ),
-                ],
-              ),
+             
+
               Divider(),
               Row(
                 children: [
@@ -424,16 +300,202 @@ class _CheckOutViewState extends State<CheckOutView> {
                 width: double.infinity,
                 child: elevatedButton(
                   onpress: () {
-                    if (selectedRadio == 3) {
-                      makePayment(context,
-                          amount:
-                              '${int.parse(widget.eventDoc!.get('price')) + 2}',
-                          eventId: widget.eventDoc!.id);
-                    }
+         
+
+Get.to(PaymentForm());
+
+// late   final WebViewController controller;
+// controller = WebViewController()
+//   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+//   ..setBackgroundColor(const Color(0x00000000))
+//   ..setNavigationDelegate(
+//     NavigationDelegate(
+//       onProgress: (int progress) {
+//         // Update loading bar.
+//       },
+//       onPageStarted: (String url) {},
+//       onPageFinished: (String url) {},
+//       onHttpError: (HttpResponseError error) {},
+//       onWebResourceError: (WebResourceError error) {},
+//       onNavigationRequest: (NavigationRequest request) {
+//         if (request.url.startsWith('https://www.youtube.com/')) {
+//           return NavigationDecision.prevent;
+//         }
+//         return NavigationDecision.navigate;
+//       },
+//     ),
+//   )
+//   ..loadRequest(Uri.parse('https://flutter.dev'));
                   },
                   text: 'Book Now',
                 ),
               )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  inittiateKhaltiV2(var amount,
+ //String key
+ )async{
+ // print('amo$key...............................');
+try {
+//  Get.put(BookingController());
+ //  BookingController bController=Get.find<BookingController>();
+ //var b=bController.paymentList[0].attributeList! .where((element) => element.attributeKey=='secret_key').first.attributeValue;
+   final response = await http.post(
+        Uri.parse('https://a.khalti.com/api/v2/epayment/initiate/'),
+        headers: {
+      HttpHeaders.contentTypeHeader: 'application/json;charset=utf-8',
+      HttpHeaders.authorizationHeader:  
+     
+      
+       //'key $key'
+ 
+ 'key live_secret_key_68791341fdd94846a146f0457ff7b455'
+ //     'key cfb7038731334d81b6b117de6ae272f1',
+  //  'key ${b.toString()}'
+
+  
+    },
+    
+//KhaltiHeader.getHeader(),
+        body: json.encode(
+          
+          {
+        "return_url": "http://example.com",
+    "website_url": "https://example.com/",
+    "amount": amount*100,
+    "purchase_order_id": "Order01",
+    "purchase_order_name": "test",
+    "customer_info": {
+    "name": "Hari",
+    "email": "test@khalti.com",
+    "phone": "9800000001"
+    }
+        }
+        
+        ),
+
+
+        
+      );
+      var res=jsonDecode(response.body);
+      print('eres${response.body}');
+      print(res['payment_url']);
+      return res['payment_url'];
+} catch (e) {
+  print('err$e');
+}
+
+
+
+
+}
+}
+
+
+
+class PaymentForm extends StatefulWidget {
+  @override
+  _PaymentFormState createState() => _PaymentFormState();
+}
+
+class _PaymentFormState extends State<PaymentForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _cardNumberController = TextEditingController();
+  final _expiryDateController = TextEditingController();
+  final _cvvController = TextEditingController();
+  final _nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _cardNumberController.dispose();
+    _expiryDateController.dispose();
+    _cvvController.dispose();
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      // Here you can handle the form submission
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(' Payment success...')),
+      );
+
+      // Simulate payment processing
+      Future.delayed(Duration(seconds: 2), () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Payment Accepted')),
+        );
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Payment Form'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _cardNumberController,
+                decoration: InputDecoration(labelText: 'Card Number'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter card number';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _expiryDateController,
+                decoration: InputDecoration(labelText: 'Expiry Date (MM/YY)'),
+                keyboardType: TextInputType.datetime,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter expiry date';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _cvvController,
+                decoration: InputDecoration(labelText: 'CVV'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter CVV';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Cardholder Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter cardholder name';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submit,
+                child: Text('Pay Now'),
+              ),
             ],
           ),
         ),
