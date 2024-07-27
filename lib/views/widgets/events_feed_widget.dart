@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:newevent/views/profile/profile.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,7 +12,7 @@ import 'package:newevent/controller/data_controller.dart';
 import 'package:newevent/model/ticket_model.dart';
 import 'package:newevent/utils/color.dart';
 import 'package:newevent/views/event_page/event_page_view.dart';
-import 'package:newevent/views/profile/add_profile.dart';
+//import 'package:newevent/views/profile/add_profile.dart';
 
 List<AustinYogaWork> austin = [
   AustinYogaWork(rangeText: '7-8', title: 'CONCERN'),
@@ -458,7 +459,7 @@ EventItem(DocumentSnapshot event) {
         children: [
           InkWell(
             onTap: () {
-              Get.to(() => ProfileScreen());
+              Get.to(() => ProfileScreen(user: user));
             },
             child: CircleAvatar(
               radius: 25,
@@ -488,6 +489,27 @@ EventItem(DocumentSnapshot event) {
           }),
       SizedBox(
         height: 15,
+      ),
+    ],
+  );
+  Row(
+    children: [
+      InkWell(
+        onTap: () {
+          Get.to(() => ProfileScreen(user: user));
+        },
+        child: CircleAvatar(
+          radius: 25,
+          backgroundColor: Colors.blue,
+          backgroundImage: NetworkImage(image),
+        ),
+      ),
+      SizedBox(
+        width: 12,
+      ),
+      Text(
+        '${user.get('first')} ${user.get('last')}',
+        style: GoogleFonts.raleway(fontWeight: FontWeight.w700, fontSize: 18),
       ),
     ],
   );
