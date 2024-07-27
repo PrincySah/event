@@ -278,7 +278,7 @@ class _EventPageViewState extends State<EventPageView> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "\$4${widget.eventData.get('price')}",
+                          "\Rs ${widget.eventData.get('price')}",
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -317,36 +317,36 @@ class _EventPageViewState extends State<EventPageView> {
               ),
               Row(
                 children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        //      Get.to(() => Inviteguest());
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(13),
-                            color: Colors.blue.withOpacity(0.9)),
-                        child: Center(
-                          child: Text(
-                            "invite Friends",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       //      Get.to(() => Inviteguest());
+                  //     },
+                  //   //   child: Container(
+                  //   //     height: 50,
+                  //   //     decoration: BoxDecoration(
+                  //   //         borderRadius: BorderRadius.circular(13),
+                  //   //         color: Colors.blue.withOpacity(0.9)),
+                  //   //   //   child: Center(
+                  //   //   //       // child: Text(
+                  //   //   //       //   "invite Friends",
+                  //   //   //       //   style: TextStyle(
+                  //   //   //       //     color: Colors.white,
+                  //   //   //       //     fontWeight: FontWeight.w500,
+                  //   //   //       //     fontSize: 16,
+                  //   //   //       //   ),
+                  //   //   //       // ),
+                  //   //   //       ),
+                  //   //   // ),
+                  //   // ),
+                  // ),
                   SizedBox(
                     width: 10,
                   ),
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                           Get.off(() => CheckOutView(widget.eventData));
+                        Get.off(() => CheckOutView(widget.eventData));
                       },
                       child: Container(
                         height: 50,

@@ -75,7 +75,7 @@ class LocalNotificationService {
 
       print(r.body);
       if (r.statusCode == 200) {
-        print('DOne');
+        print('Done');
       } else {
         print(r.statusCode);
       }

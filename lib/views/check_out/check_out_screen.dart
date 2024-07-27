@@ -25,12 +25,10 @@ class CheckOutView extends StatefulWidget {
 }
 
 class _CheckOutViewState extends State<CheckOutView> {
-
-
   int selectedRadio = 0;
-String refId = '';
+  String refId = '';
   String hasError = '';
-  final String title='';
+  final String title = '';
 //  initState() {
 //    super.initState();
 //     print("initState Called");
@@ -49,7 +47,7 @@ String refId = '';
 
 //  late final WebViewController controller;
 //final WebViewController controller =
-        //WebViewController.fromPlatformCreationParams();
+  //WebViewController.fromPlatformCreationParams();
   void setSelectedRadio(int val) {
     setState(() {
       selectedRadio = val;
@@ -101,16 +99,22 @@ String refId = '';
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      width: 27,
-                      height: 27,
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/circle.png'),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(
+                            context); // Navigate back to the previous screen
+                      },
+                      child: Container(
+                        width: 27,
+                        height: 27,
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/circle.png'),
+                          ),
                         ),
+                        child: Image.asset('assets/bi_x-lg.png'),
                       ),
-                      child: Image.asset('assets/bi_x-lg.png'),
                     ),
                   ),
                   Expanded(
@@ -248,8 +252,6 @@ String refId = '';
                   fontSize: 16,
                 ),
               ),
-             
-
               Divider(),
               Row(
                 children: [
@@ -262,7 +264,7 @@ String refId = '';
                   ),
                   Spacer(),
                   myText(
-                    text: '\$${widget.eventDoc!.get('price')}',
+                    text: '\Rs ${widget.eventDoc!.get('price')}',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -282,7 +284,7 @@ String refId = '';
                   ),
                   Spacer(),
                   myText(
-                    text: '\$${int.parse(widget.eventDoc!.get('price')) + 2}',
+                    text: '\Rs ${int.parse(widget.eventDoc!.get('price'))}',
                     style: TextStyle(
                       fontSize: 16,
                       color: AppColors.blue,
@@ -300,9 +302,7 @@ String refId = '';
                 width: double.infinity,
                 child: elevatedButton(
                   onpress: () {
-         
-
-Get.to(PaymentForm());
+                    Get.to(PaymentForm());
 
 // late   final WebViewController controller;
 // controller = WebViewController()
@@ -337,66 +337,51 @@ Get.to(PaymentForm());
     );
   }
 
-  inittiateKhaltiV2(var amount,
- //String key
- )async{
- // print('amo$key...............................');
-try {
+  inittiateKhaltiV2(
+    var amount,
+    //String key
+  ) async {
+    // print('amo$key...............................');
+    try {
 //  Get.put(BookingController());
- //  BookingController bController=Get.find<BookingController>();
- //var b=bController.paymentList[0].attributeList! .where((element) => element.attributeKey=='secret_key').first.attributeValue;
-   final response = await http.post(
+      //  BookingController bController=Get.find<BookingController>();
+      //var b=bController.paymentList[0].attributeList! .where((element) => element.attributeKey=='secret_key').first.attributeValue;
+      final response = await http.post(
         Uri.parse('https://a.khalti.com/api/v2/epayment/initiate/'),
         headers: {
-      HttpHeaders.contentTypeHeader: 'application/json;charset=utf-8',
-      HttpHeaders.authorizationHeader:  
-     
-      
-       //'key $key'
- 
- 'key live_secret_key_68791341fdd94846a146f0457ff7b455'
- //     'key cfb7038731334d81b6b117de6ae272f1',
-  //  'key ${b.toString()}'
+          HttpHeaders.contentTypeHeader: 'application/json;charset=utf-8',
+          HttpHeaders.authorizationHeader:
 
-  
-    },
-    
+              //'key $key'
+
+              'key live_secret_key_68791341fdd94846a146f0457ff7b455'
+          //     'key cfb7038731334d81b6b117de6ae272f1',
+          //  'key ${b.toString()}'
+        },
+
 //KhaltiHeader.getHeader(),
-        body: json.encode(
-          
-          {
-        "return_url": "http://example.com",
-    "website_url": "https://example.com/",
-    "amount": amount*100,
-    "purchase_order_id": "Order01",
-    "purchase_order_name": "test",
-    "customer_info": {
-    "name": "Hari",
-    "email": "test@khalti.com",
-    "phone": "9800000001"
-    }
-        }
-        
-        ),
-
-
-        
+        body: json.encode({
+          "return_url": "http://example.com",
+          "website_url": "https://example.com/",
+          "amount": amount * 100,
+          "purchase_order_id": "Order01",
+          "purchase_order_name": "test",
+          "customer_info": {
+            "name": "Hari",
+            "email": "test@khalti.com",
+            "phone": "9800000001"
+          }
+        }),
       );
-      var res=jsonDecode(response.body);
+      var res = jsonDecode(response.body);
       print('eres${response.body}');
       print(res['payment_url']);
       return res['payment_url'];
-} catch (e) {
-  print('err$e');
+    } catch (e) {
+      print('err$e');
+    }
+  }
 }
-
-
-
-
-}
-}
-
-
 
 class PaymentForm extends StatefulWidget {
   @override

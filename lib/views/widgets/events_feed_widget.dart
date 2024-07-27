@@ -161,7 +161,7 @@ Widget buildCard(
     dateInformation = [];
   }
 
-  int comments = 0;
+  // int comments = 0;
 
   List userLikes = [];
 
@@ -171,11 +171,11 @@ Widget buildCard(
     userLikes = [];
   }
 
-  try {
-    comments = eventData!.get('comments').length;
-  } catch (e) {
-    comments = 0;
-  }
+  // try {
+  //   comments = eventData!.get('comments').length;
+  // } catch (e) {
+  //   comments = 0;
+  // }
 
   List eventSavedByUsers = [];
   try {
@@ -380,26 +380,26 @@ Widget buildCard(
             SizedBox(
               width: 20,
             ),
-            Container(
-              padding: EdgeInsets.all(0.5),
-              width: 17,
-              height: 17,
-              child: Image.asset(
-                'assets/message.png',
-                color: AppColors.black,
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.all(0.5),
+            //   width: 17,
+            //   height: 17,
+            //   // child: Image.asset(
+            //   //   'assets/message.png',
+            //   //   color: AppColors.black,
+            //   // ),
+            // ),
             SizedBox(
               width: 5,
             ),
-            Text(
-              '$comments',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: AppColors.black,
-              ),
-            ),
+            // Text(
+            //   '$comments',
+            //   style: TextStyle(
+            //     fontSize: 13,
+            //     fontWeight: FontWeight.w500,
+            //     color: AppColors.black,
+            //   ),
+            // ),
             SizedBox(
               width: 15,
             ),
@@ -407,11 +407,11 @@ Widget buildCard(
               padding: EdgeInsets.all(0.5),
               width: 16,
               height: 16,
-              child: Image.asset(
-                'assets/send.png',
-                fit: BoxFit.contain,
-                color: AppColors.black,
-              ),
+              // child: Image.asset(
+              //   'assets/send.png',
+              //   fit: BoxFit.contain,
+              //   color: AppColors.black,
+              // ),
             ),
           ],
         ),
