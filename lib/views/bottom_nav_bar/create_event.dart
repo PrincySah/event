@@ -184,41 +184,41 @@ class _CreateEventViewState extends State<CreateEventView> {
                               bottom: BorderSide(
                                   color: Colors.black.withOpacity(0.6),
                                   width: 0.6))),
-                      child: DropdownButton(
-                        isExpanded: true,
-                        underline: Container(
-                            // decoration: BoxDecoration(
-                            //   border: Border.all(
-                            //     width: 0,
-                            //     color: Colors.white,
-                            //   ),
-                            // ),
-                            ),
+                      // child: DropdownButton(
+                      //   isExpanded: true,
+                      //   underline: Container(
+                      //       // decoration: BoxDecoration(
+                      //       //   border: Border.all(
+                      //       //     width: 0,
+                      //       //     color: Colors.white,
+                      //       //   ),
+                      //       // ),
+                      //       ),
 
-                        // borderRadius: BorderRadius.circular(10),
-                        icon: Image.asset('assets/arrowDown.png'),
-                        elevation: 16,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.black,
-                        ),
-                        value: event_type,
-                        onChanged: (String? newValue) {
-                          setState(
-                            () {
-                              event_type = newValue!;
-                            },
-                          );
-                        },
-                        items: list_item
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
+                      // borderRadius: BorderRadius.circular(10),
+                      // icon: Image.asset('assets/arrowDown.png'),
+                      // elevation: 16,
+                      // style: TextStyle(
+                      //   fontWeight: FontWeight.w400,
+                      //   color: AppColors.black,
+                      // ),
+                      // value: event_type,
+                      // onChanged: (String? newValue) {
+                      //   setState(
+                      //     () {
+                      //       event_type = newValue!;
+                      //     },
+                      //   );
+                      // },
+                      // items: list_item
+                      //     .map<DropdownMenuItem<String>>((String value) {
+                      //   return DropdownMenuItem(
+                      //     value: value,
+                      //     child: Text(value),
+                      //   );
+                      // }).toList(),
                     ),
+                    // ),
                   ],
                 ),
                 SizedBox(
@@ -425,7 +425,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                 myTextField(
                     bool: false,
                     icon: 'assets/location.png',
-                    text: 'Location',
+                    text: 'location',
                     controller: locationController,
                     validator: (String input) {
                       if (input.isEmpty) {
@@ -436,7 +436,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       }
 
                       if (input.length < 3) {
-                        Get.snackbar('Opps', "Location is Invalid.",
+                        Get.snackbar('Opps', "location is Invalid.",
                             colorText: Colors.white,
                             backgroundColor: Colors.blue);
                         return '';
@@ -891,13 +891,12 @@ class _CreateEventViewState extends State<CreateEventView> {
                             width: 1, color: AppColors.genderTextColor),
                       ),
                       // decoration: BoxDecoration(
-                      //
-                      //   // borderRadius: BorderRadius.circular(8),
-                      //    border: Border(
-                      //         bottom: BorderSide(color: Colors.black.withOpacity(0.8),width: 0.6)
-                      //     )
-                      //
-                      // ),
+
+                      //     borderRadius: BorderRadius.circular(8),
+                      //     border: Border(
+                      //         bottom: BorderSide(
+                      //             color: Colors.black.withOpacity(0.8),
+                      //             width: 0.6))),
                       child: DropdownButton(
                         isExpanded: true,
                         underline: Container(),
@@ -933,7 +932,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       ),
                     ),
                     iconTitleContainer(
-                        path: 'assets/dollarLogo.png',
+                        path: 'assets/rupees.png',
                         text: 'price',
                         type: TextInputType.number,
                         height: 40,
@@ -965,13 +964,13 @@ class _CreateEventViewState extends State<CreateEventView> {
                                 return;
                               }
 
-                              // if (media.isEmpty) {
-                              //   Get.snackbar('Opps', "Media is required.",
-                              //       colorText: Colors.white,
-                              //       backgroundColor: Colors.blue);
+                              if (media.isEmpty) {
+                                Get.snackbar('Opps', "Media is required.",
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.blue);
 
-                              //   return;
-                              // }
+                                return;
+                              }
 
                               if (tagsController.text.isEmpty) {
                                 Get.snackbar('Opps', "Tags is required.",
@@ -1018,7 +1017,6 @@ class _CreateEventViewState extends State<CreateEventView> {
                                   tagsController.text.split(',');
 
                               Map<String, dynamic> eventData = {
-                                'event': event_type,
                                 'event_name': titleController.text,
                                 'location': locationController.text,
                                 'date':
@@ -1029,7 +1027,6 @@ class _CreateEventViewState extends State<CreateEventView> {
                                 'frequency_of_event':
                                     frequencyEventController.text,
                                 'description': descriptionController.text,
-                                'who_can_invite': accessModifier,
                                 'joined': [
                                   FirebaseAuth.instance.currentUser!.uid
                                 ],

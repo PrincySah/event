@@ -25,6 +25,10 @@ class _EventPageViewState extends State<EventPageView> {
   @override
   Widget build(BuildContext context) {
     String image = '';
+    String location = '';
+
+    ///ignore: empty_statements
+    // String location = widget.user.data()?['location'] ?? '';
 
     try {
       image = widget.user.get('image');
@@ -132,7 +136,7 @@ class _EventPageViewState extends State<EventPageView> {
                         height: 2,
                       ),
                       Text(
-                        "${widget.user.get('location')}",
+                        '${widget.user.get('location')}',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
