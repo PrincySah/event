@@ -419,27 +419,27 @@ class _EventPageViewState extends State<EventPageView> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    comments.toString(),
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Image.asset(
-                    'assets/send.png',
-                    height: 16,
-                    width: 16,
-                  ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // Text(
+                  //   comments.toString(),
+                  //   style: TextStyle(
+                  //     fontSize: 15,
+                  //     fontWeight: FontWeight.w500,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // Image.asset(
+                  //   'assets/send.png',
+                  //   height: 16,
+                  //   width: 16,
+                  // ),
                   Spacer(),
                   InkWell(
                     onTap: () {

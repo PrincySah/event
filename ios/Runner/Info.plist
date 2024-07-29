@@ -45,5 +45,14 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+<array>
+    <string>remote-notification</string>
+</array>
+<key>UIUserNotificationCenter</key>
+<dict>
+    <key>delegate</key>
+    <string>$(PRODUCT_MODULE_NAME).AppDelegate</string>
+</dict>
 </dict>
 </plist>

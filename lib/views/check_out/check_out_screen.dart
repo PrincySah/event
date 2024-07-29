@@ -1,16 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:khalti_flutter/khalti_flutter.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:khalti/khalti.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:newevent/Services/payment_service/payment_service.dart';
 import 'package:newevent/utils/color.dart';
 import 'package:newevent/views/widgets/my_widgets.dart';
+import 'package:khalti_flutter/src/widget/khalti_scope.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -46,8 +50,8 @@ class _CheckOutViewState extends State<CheckOutView> {
 // );
 
 //  late final WebViewController controller;
-//final WebViewController controller =
-  //WebViewController.fromPlatformCreationParams();
+// final WebViewController controller =
+//   WebViewController.fromPlatformCreationParams();
   void setSelectedRadio(int val) {
     setState(() {
       selectedRadio = val;
@@ -303,29 +307,6 @@ class _CheckOutViewState extends State<CheckOutView> {
                 child: elevatedButton(
                   onpress: () {
                     Get.to(PaymentForm());
-
-// late   final WebViewController controller;
-// controller = WebViewController()
-//   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-//   ..setBackgroundColor(const Color(0x00000000))
-//   ..setNavigationDelegate(
-//     NavigationDelegate(
-//       onProgress: (int progress) {
-//         // Update loading bar.
-//       },
-//       onPageStarted: (String url) {},
-//       onPageFinished: (String url) {},
-//       onHttpError: (HttpResponseError error) {},
-//       onWebResourceError: (WebResourceError error) {},
-//       onNavigationRequest: (NavigationRequest request) {
-//         if (request.url.startsWith('https://www.youtube.com/')) {
-//           return NavigationDecision.prevent;
-//         }
-//         return NavigationDecision.navigate;
-//       },
-//     ),
-//   )
-//   ..loadRequest(Uri.parse('https://flutter.dev'));
                   },
                   text: 'Book Now',
                 ),
@@ -337,154 +318,154 @@ class _CheckOutViewState extends State<CheckOutView> {
     );
   }
 
-  inittiateKhaltiV2(
-    var amount,
-    //String key
-  ) async {
-    // print('amo$key...............................');
-    try {
-//  Get.put(BookingController());
-      //  BookingController bController=Get.find<BookingController>();
-      //var b=bController.paymentList[0].attributeList! .where((element) => element.attributeKey=='secret_key').first.attributeValue;
-      final response = await http.post(
-        Uri.parse('https://a.khalti.com/api/v2/epayment/initiate/'),
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json;charset=utf-8',
-          HttpHeaders.authorizationHeader:
+// //KhaltiHeader.getHeader(),
+//         body: json.encode({
+//           "return_url": "http://example.com",
+//           "website_url": "https://example.com/",
+//           "amount": amount * 100,
+//           "purchase_order_id": "Order01",
+//           "purchase_order_name": "test",
+//           "customer_info": {
+//             "name": "Hari",
+//             "email": "test@khalti.com",
+//             "phone": "9800000001"
+//           }
+//         }),
+//       );
+//       var res = jsonDecode(response.body);
+//       print('eres${response.body}');
+//       print(res['payment_url']);
+//       return res['payment_url'];
+//     } catch (e) {
+//       print('err$e');
+//     }
+//   }
+// }
 
-              //'key $key'
+//  class PaymentForm extends StatefulWidget {
+//    @override
+//   _PaymentFormState createState() => _PaymentFormState();
+//  }
 
-              'key live_secret_key_68791341fdd94846a146f0457ff7b455'
-          //     'key cfb7038731334d81b6b117de6ae272f1',
-          //  'key ${b.toString()}'
-        },
+// class _PaymentFormState extends State<PaymentForm> {
 
-//KhaltiHeader.getHeader(),
-        body: json.encode({
-          "return_url": "http://example.com",
-          "website_url": "https://example.com/",
-          "amount": amount * 100,
-          "purchase_order_id": "Order01",
-          "purchase_order_name": "test",
-          "customer_info": {
-            "name": "Hari",
-            "email": "test@khalti.com",
-            "phone": "9800000001"
-          }
-        }),
-      );
-      var res = jsonDecode(response.body);
-      print('eres${response.body}');
-      print(res['payment_url']);
-      return res['payment_url'];
-    } catch (e) {
-      print('err$e');
-    }
-  }
-}
+//     String referenceid = '';
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Khalti payment')),
+//         body: Center(child: Column(
+//           mainAxisSize: MainAxisSize.max,
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         children: [
+//           ElevatedButton(onPressed: () {
+//             Get.to(payviakhaltiinapp());
+//           }, child: const Text('Pay via Khalti')),
+//           Text(referenceid)
 
-class PaymentForm extends StatefulWidget {
-  @override
-  _PaymentFormState createState() => _PaymentFormState();
-}
+//         ],
 
-class _PaymentFormState extends State<PaymentForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _cardNumberController = TextEditingController();
-  final _expiryDateController = TextEditingController();
-  final _cvvController = TextEditingController();
-  final _nameController = TextEditingController();
+//         ),),
+//     );
+//   }
 
-  @override
-  void dispose() {
-    _cardNumberController.dispose();
-    _expiryDateController.dispose();
-    _cvvController.dispose();
-    _nameController.dispose();
-    super.dispose();
-  }
+//   payviakhaltiinapp(){
+//     KhaltiScope.of(context).pay(
+//       config: PaymentConfig(amount: 1000, productIdentity: "Product id", productName: "Product name"),
+//       preferences: [
+//         PaymentPreference.khalti,
+//       ],
+//       onSuccess: onSuccess,
+//       onFailure: onFailure,
+//       onCancel: onCancel
+//       );
 
-  void _submit() {
-    if (_formKey.currentState?.validate() ?? false) {
-      // Here you can handle the form submission
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(' Payment success...')),
-      );
+//   }
+//   void onSuccess(PaymentSuccessModel success){
+//     showDialog(context: context, builder: (context){
+//     return AlertDialog(title: Text ("Payment Sucessful"),
+//        actions: [
+//         SimpleDialogOption(child: const Text("OK"),
+//         onPressed: (){
+//           setState(() {
+//            referenceid= success.idx;
+//           });
+//           Navigator.pop(context);
+//         },)
+//        ],
 
-      // Simulate payment processing
-      Future.delayed(Duration(seconds: 2), () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Payment Accepted')),
-        );
-      });
-    }
-  }
+//     );
+//   });
+// }
+// void onFailure(PaymentFailureModel failure){
+//   debugPrint(failure.toString());
+// }
+// void onCancel(){
+//   debugPrint("Cancelled");
+// }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Form'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _cardNumberController,
-                decoration: InputDecoration(labelText: 'Card Number'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter card number';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _expiryDateController,
-                decoration: InputDecoration(labelText: 'Expiry Date (MM/YY)'),
-                keyboardType: TextInputType.datetime,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter expiry date';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _cvvController,
-                decoration: InputDecoration(labelText: 'CVV'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter CVV';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Cardholder Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter cardholder name';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submit,
-                child: Text('Pay Now'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+// //       body: Padding(
+// //         padding: EdgeInsets.all(16.0),
+// //         child: Form(
+// //           key: _formKey,
+// //           child: Column(
+// //             crossAxisAlignment: CrossAxisAlignment.stretch,
+// //             children: [
+// //               TextFormField(
+// //                 controller: _cardNumberController,
+// //                 decoration: InputDecoration(labelText: 'Card Number'),
+// //                 keyboardType: TextInputType.number,
+// //                 validator: (value) {
+// //                   if (value == null || value.isEmpty) {
+// //                     return 'Please enter card number';
+// //                   }
+// //                   return null;
+// //                 },
+// //               ),
+// //               TextFormField(
+// //                 controller: _expiryDateController,
+// //                 decoration: InputDecoration(labelText: 'Expiry Date (MM/YY)'),
+// //                 keyboardType: TextInputType.datetime,
+// //                 validator: (value) {
+// //                   if (value == null || value.isEmpty) {
+// //                     return 'Please enter expiry date';
+// //                   }
+// //                   return null;
+// //                 },
+// //               ),
+// //               TextFormField(
+// //                 controller: _cvvController,
+// //                 decoration: InputDecoration(labelText: 'CVV'),
+// //                 keyboardType: TextInputType.number,
+// //                 validator: (value) {
+// //                   if (value == null || value.isEmpty) {
+// //                     return 'Please enter CVV';
+// //                   }
+// //                   return null;
+// //                 },
+// //               ),
+// //               TextFormField(
+// //                 controller: _nameController,
+// //                 decoration: InputDecoration(labelText: 'Cardholder Name'),
+// //                 validator: (value) {
+// //                   if (value == null || value.isEmpty) {
+// //                     return 'Please enter cardholder name';
+// //                   }
+// //                   return null;
+// //                 },
+// //               ),
+// //               SizedBox(height: 20),
+// //               ElevatedButton(
+// //                 onPressed: _submit,
+// //                 child: Text('Pay Now'),
+// //               ),
+// //             ],
+// //           ),
+// //         ),
+// //       ),
+// //     );
+// //   }
+// // }
 }

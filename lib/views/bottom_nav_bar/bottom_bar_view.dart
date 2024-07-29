@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newevent/views/community/community.dart';
@@ -27,7 +26,7 @@ class _BottomBarViewState extends State<BottomBarView> {
   List<Widget> widgetOption = [
     HomeScreen(),
     CommunityScreen(),
-     CreateEventView(),
+    CreateEventView(),
     MessageScreen(),
     ProfileScreen()
   ];
@@ -39,15 +38,12 @@ class _BottomBarViewState extends State<BottomBarView> {
     // Get.put(DataController(),permanent: true);
     //     FirebaseMessaging.instance.getInitialMessage();
     // FirebaseMessaging.onMessage.listen((message) {
-      
+
     //   LocalNotificationService.display(message);
     //});
 
-  //LocalNotificationService.storeToken();
+    //LocalNotificationService.storeToken();
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {

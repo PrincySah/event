@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newevent/controller/data_controller.dart';
 import 'package:newevent/utils/color.dart';
+import 'package:newevent/views/widgets/events_feed_widget.dart';
 import 'package:newevent/views/widgets/my_widgets.dart';
 
 // import '../../utils/app_color.dart';
@@ -143,21 +144,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   alignment: Alignment.topRight,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Image(
-                          image: AssetImage('assets/sms.png'),
-                          width: 28,
-                          height: 25,
-                        ),
-                      ),
-                      Image(
-                        image: AssetImage('assets/menu.png'),
-                        width: 23.33,
-                        height: 19,
-                      ),
-                    ],
+                    // children: [
+                    //   InkWell(
+                    //     onTap: () {},
+                    //     child: Image(
+                    //     //   image: AssetImage('assets/sms.png'),
+                    //     //   width: 28,
+                    //     //   height: 25,
+                    //     // ),
+                    //   ),
+                    //   // Image(
+                    //   //   image: AssetImage('assets/menu.png'),
+                    //   //   width: 23.33,
+                    //   //   height: 19,
+                    //   // ),
+                    // ],
                   ),
                 ),
               ),
@@ -177,6 +178,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         offset: Offset(0, 0), // changes position of shadow
                       ),
                     ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  margin: EdgeInsets.only(top: 105, right: 35),
+                  child: InkWell(
+                    onTap: () {
+                      if (isNotEditable == false) {
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .set({
+                          'first': firstNameController.text,
+                          'last': lastNameController.text,
+                          'location': locationController.text,
+                          'desc': descriptionController.text
+                        }, SetOptions(merge: true)).then((value) {
+                          Get.snackbar('Profile Updated',
+                              'Profile has been updated successfully.',
+                              colorText: Colors.white,
+                              backgroundColor: Colors.blue);
+                        });
+                      }
+
+                      setState(() {
+                        isNotEditable = !isNotEditable;
+                      });
+                    },
+                    child: isNotEditable
+                        ? Image(
+                            image: AssetImage('assets/edit.png'),
+                            width: screenwidth * 0.04,
+                          )
+                        : Icon(
+                            Icons.check,
+                            color: Colors.black,
+                          ),
                   ),
                 ),
               ),
@@ -332,7 +372,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               controller: descriptionController,
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
-                                hintText: 'Description',
+                                hintText: 'Add Bio',
                               ),
                             ),
                           ),
@@ -373,26 +413,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 unselectedLabelColor: Colors.black,
                                 tabs: [
                                   Tab(
-                                    icon: Image.asset("assets/ticket.png"),
-                                    height: 20,
+                                    icon: Image.asset("assets/event.png"),
+                                    height: 40,
                                   ),
-                                  Tab(
-                                    icon: Image.asset("assets/Group 18600.png"),
-                                    height: 20,
-                                  ),
+                                  // Tab(
+                                  //   icon: Image.asset("assets/Group 18600.png"),
+                                  //   height: 20,
+                                  // ),
                                 ],
                               ),
                             ),
                             Container(
                               height: screenheight * 0.46,
-                              //height of TabBarView
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(
-                                    color: Colors.white,
-                                    width: 0.5,
-                                  ),
-                                ),
+                              // height of TabBarView
+                              // decoration: BoxDecoration(
+                              //   border: Border(
+                              //     top: BorderSide(
+                              //       color: Colors.white,
+                              //       width: 0.5,
+                              //     ),
+                              //   ),
+                              // ),
+                              child: TabBarView(
+                                children: [
+                                  // First tab
+                                  EventsIJoined()
+
+                                  // // Second tab
+                                  // Container(
+                                  //   child: Center(child: Text('No data')),
+                                  // ),
+                                ],
                               ),
                             ),
                           ],
@@ -402,183 +453,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  margin: EdgeInsets.only(top: 105, right: 35),
-                  child: InkWell(
-                    onTap: () {
-                      if (isNotEditable == false) {
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .set({
-                          'first': firstNameController.text,
-                          'last': lastNameController.text,
-                          'location': locationController.text,
-                          'desc': descriptionController.text
-                        }, SetOptions(merge: true)).then((value) {
-                          Get.snackbar('Profile Updated',
-                              'Profile has been updated successfully.',
-                              colorText: Colors.white,
-                              backgroundColor: Colors.blue);
-                        });
-                      }
-
-                      setState(() {
-                        isNotEditable = !isNotEditable;
-                      });
-                    },
-                    child: isNotEditable
-                        ? Image(
-                            image: AssetImage('assets/edit.png'),
-                            width: screenwidth * 0.04,
-                          )
-                        : Icon(
-                            Icons.check,
-                            color: Colors.black,
-                          ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
-  }
-}
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  margin: EdgeInsets.only(top: 105, right: 35),
-                  child: InkWell(
-                    onTap: () {
-                      if (isNotEditable == false) {
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .set({
-                          'first': firstNameController.text,
-                          'last': lastNameController.text,
-                          'location': locationController.text,
-                          'desc': descriptionController.text
-                        }, SetOptions(merge: true)).then((value) {
-                          Get.snackbar('Profile Updated',
-                              'Profile has been updated successfully.',
-                              colorText: Colors.white,
-                              backgroundColor: Colors.blue);
-                        });
-                      }
-
-                      setState(() {
-                        isNotEditable = !isNotEditable;
-                      });
-                    },
-                    child: isNotEditable
-                        ? Image(
-                            image: AssetImage('assets/edit.png'),
-                            width: screenwidth * 0.04,
-                          )
-                        : Icon(
-                            Icons.check,
-                            color: Colors.black,
-                          ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TicketTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Ticket Tab',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
-  }
-}
-
-class ReviewTab extends StatefulWidget {
-  final TextEditingController reviewController;
-  final bool isReviewEditable;
-  ReviewTab({required this.reviewController, required this.isReviewEditable});
-  @override
-  _ReviewTabState createState() => _ReviewTabState();
-}
-
-class _ReviewTabState extends State<ReviewTab> {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('reviews').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot document = snapshot.data!.docs[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              document['userName'],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(Icons.star, color: Colors.amber),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          document['review'],
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        });
   }
 }
