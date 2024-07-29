@@ -288,34 +288,33 @@ Widget buildCard(
             ],
           ),
         ),
-        Row(
-          children: [
-            Container(
-                width: Get.width * 0.6, height: 50, child: Text('yet to come')
+        // Row(
+        //   children: [
+        //     Container(width: Get.width * 0.6, height: 50, child: Text(' ')
 
-                //   ListView.builder(itemBuilder: (ctx,index){
+        //         //   ListView.builder(itemBuilder: (ctx,index){
 
-                //       DocumentSnapshot user = dataController.allUsers.firstWhere((e)=> e.id == joinedUsers[index]);
+        //         //       DocumentSnapshot user = dataController.allUsers.firstWhere((e)=> e.id == joinedUsers[index]);
 
-                //       String image = '';
+        //         //       String image = '';
 
-                //       try{
-                //         image = user.get('image');
-                //       }catch(e){
-                //         image = '';
-                //       }
+        //         //       try{
+        //         //         image = user.get('image');
+        //         //       }catch(e){
+        //         //         image = '';
+        //         //       }
 
-                //   return Container(
-                //     margin: EdgeInsets.only(left: 10),
-                //     child: CircleAvatar(
-                //   minRadius: 13,
-                //   backgroundImage: NetworkImage(image),
-                // ),
-                //   );
-                // },itemCount: joinedUsers.length,scrollDirection: Axis.horizontal,)
-                ),
-          ],
-        ),
+        //         //   return Container(
+        //         //     margin: EdgeInsets.only(left: 10),
+        //         //     child: CircleAvatar(
+        //         //   minRadius: 13,
+        //         //   backgroundImage: NetworkImage(image),
+        //         // ),
+        //         //   );
+        //         // },itemCount: joinedUsers.length,scrollDirection: Axis.horizontal,)
+        //         ),
+        //   ],
+        // ),
         SizedBox(
           height: Get.height * 0.03,
         ),
@@ -707,9 +706,7 @@ EventItem(DocumentSnapshot event) {
 // //         ),
 // //       ],
 // //     );
-//                 }
 
-//////////////////////////////////////////////////////////////////
 EventsIJoined() {
   // DataController dataController = Get.find<DataController>();
 
@@ -744,31 +741,31 @@ EventsIJoined() {
 
   return Column(
     children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 50,
-            height: 50,
-            padding: EdgeInsets.all(10),
-            child: Image.asset(
-              'assets/doneCircle.png',
-              fit: BoxFit.cover,
-              color: AppColors.blue,
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Text(
-            'You\'re all caught up!',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     Container(
+      //       width: 50,
+      //       height: 50,
+      //       padding: EdgeInsets.all(10),
+      //       child: Image.asset(
+      //         'assets/doneCircle.png',
+      //         fit: BoxFit.cover,
+      //         color: AppColors.blue,
+      //       ),
+      //     ),
+      //     SizedBox(
+      //       width: 15,
+      //     ),
+      //     Text(
+      //       'You\'re all caught up!',
+      //       style: TextStyle(
+      //         fontSize: 18,
+      //         fontWeight: FontWeight.w700,
+      //       ),
+      //     ),
+      //   ],
+      // ),
       SizedBox(
         height: Get.height * 0.015,
       ),

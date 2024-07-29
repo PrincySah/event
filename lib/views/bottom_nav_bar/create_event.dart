@@ -933,7 +933,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                       ),
                     ),
                     iconTitleContainer(
-                        path: 'assets/dollarLogo.png',
+                        path: 'assets/rs.png',
                         text: 'price',
                         type: TextInputType.number,
                         height: 40,
