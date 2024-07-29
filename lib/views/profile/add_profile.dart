@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:newevent/views/profile/profile.dart';
-import 'package:newevent/views/profile/add_profile.dart';
-import 'package:newevent/views/widgets/events_feed_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       initialDate: DateTime.now(),
       initialDatePickerMode: DatePickerMode.day,
       firstDate: DateTime(1950),
-      lastDate: DateTime.now(), // Restrict lastDate to today
+      lastDate: DateTime(2101),
     );
     if (picked != null) {
       dob.text = '${picked.day}-${picked.month}-${picked.year}';
@@ -208,8 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return '';
                       }
 
-                      if (mobileNumberController.text.length < 10 ||
-                          mobileNumberController.text.length! > 11) {
+                      if (mobileNumberController.text.length < 10) {
                         Get.snackbar('Warning', 'Enter valid phone number.',
                             colorText: Colors.white,
                             backgroundColor: Colors.blue);

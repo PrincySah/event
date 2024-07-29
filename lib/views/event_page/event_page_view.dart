@@ -25,10 +25,6 @@ class _EventPageViewState extends State<EventPageView> {
   @override
   Widget build(BuildContext context) {
     String image = '';
-    String location = '';
-
-    ///ignore: empty_statements
-    // String location = widget.user.data()?['location'] ?? '';
 
     try {
       image = widget.user.get('image');
@@ -136,7 +132,9 @@ class _EventPageViewState extends State<EventPageView> {
                         height: 2,
                       ),
                       Text(
-                        '${widget.user.get('location')}',
+                        "${widget.eventData.get('location')}",
+                        
+                        //user.get('location')}",
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
@@ -419,27 +417,27 @@ class _EventPageViewState extends State<EventPageView> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // Text(
-                  //   comments.toString(),
-                  //   style: TextStyle(
-                  //     fontSize: 15,
-                  //     fontWeight: FontWeight.w500,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // Image.asset(
-                  //   'assets/send.png',
-                  //   height: 16,
-                  //   width: 16,
-                  // ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    comments.toString(),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(
+                    'assets/send.png',
+                    height: 16,
+                    width: 16,
+                  ),
                   Spacer(),
                   InkWell(
                     onTap: () {
